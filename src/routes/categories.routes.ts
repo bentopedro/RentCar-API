@@ -5,10 +5,10 @@ import { CategoriesRepository } from "../repositories/categoriesRepository";
 
 const categoriesRoutes = Router();
 
+const categoriesRepository = new CategoriesRepository();
+
 categoriesRoutes.post("/categories", (request, response) => {
     const { name, description } = request.body;
-
-    const categoriesRepository = new CategoriesRepository();
 
     categoriesRepository.create({
         name,
@@ -16,6 +16,10 @@ categoriesRoutes.post("/categories", (request, response) => {
     });
 
     return response.status(201).send();
+});
+
+categoriesRoutes.get("/categories", (request, response) => {
+    return response.json(categoriesRepository.list());
 });
 
 export { categoriesRoutes };

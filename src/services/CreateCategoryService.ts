@@ -9,9 +9,9 @@ class CreateCategoryService {
     // DIP
     constructor(private categoriesRepository: CategoriesRepository) {}
 
-    // O service não pode conhecer a implementação da rota, se criou a interface IRequest
+    // O service não pode conhecer a implementação da rota, criou-se a interface IRequest para receber os dados
     // SOLID - Single Responsibility Principle
-    execute({ name, description }: IRequest) {
+    execute({ name, description }: IRequest): void {
         // instance repository, but always reset the Array of categories. solution is DIP - Dependency Invertion Principle
         // const categoriesRepository = new CategoriesRepository();
 

@@ -1,11 +1,13 @@
 import { Router } from "express";
 
 import { CategoriesRepository } from "../repositories/categoriesRepository";
+import { PostgreCategoriesRepository } from "../repositories/PostgreCategoriesRepository";
 import { CreateCategoryService } from "../services/CreateCategoryService";
 
 const categoriesRoutes = Router();
 
 const categoriesRepository = new CategoriesRepository();
+// const categoriesRepository = new PostgreCategoriesRepository(); Implementar o repositório para o PostgreSQL
 
 categoriesRoutes.post("/categories", (request, response) => {
     const { name, description } = request.body;

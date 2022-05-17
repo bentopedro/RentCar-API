@@ -1,4 +1,4 @@
-import { CategoriesRepository } from "../repositories/categoriesRepository";
+import { ICategoriesRepository } from "../repositories/ICategoriesRepository";
 
 interface IRequest {
     name: string;
@@ -7,7 +7,7 @@ interface IRequest {
 
 class CreateCategoryService {
     // DIP
-    constructor(private categoriesRepository: CategoriesRepository) {}
+    constructor(private categoriesRepository: ICategoriesRepository) {}
 
     // O service não pode conhecer a implementação da rota, criou-se a interface IRequest para receber os dados
     // SOLID - Single Responsibility Principle

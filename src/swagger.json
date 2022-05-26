@@ -1,0 +1,51 @@
+{
+    "openapi": "3.0.0",
+    "info":{
+        "title": "RentCar API Reference",
+        "description": "This is a API Reference for Rent",
+        "contact":{
+            "name": "Bento Pedro",
+            "email": "bentomenni.kidima@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+
+    "paths":{
+        "/categories": {
+            "post":{
+                "tags":["Category"],
+                "summary": "Create a category",
+                "description": "Create a new category",
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type":"object",
+                                "properties":{
+                                    "name": {
+                                        "type":"string"
+                                    },
+                                    "description": {
+                                        "type":"string"
+                                    }
+                                },
+                                "examples":{
+                                    "name":"Category Name",
+                                    "description":"Category Description"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201":{
+                        "description": "Created category"
+                    },
+                    "500":{
+                        "description": "Category could not be created"
+                    }
+                }
+            }
+        }
+    }
+}

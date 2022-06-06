@@ -1,8 +1,8 @@
 {
-    "type": "mysql",
+    "type": "postgres",
+    "port": 5432,
     "host": "localhost",
     "username": "root",
     "password": "ignite",
-    "port": 3306,
-    "database": "rentcar"
+    "database": "rentx"
 }

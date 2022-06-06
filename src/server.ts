@@ -5,7 +5,7 @@ import { categoriesRoutes } from "./routes/categories.routes";
 import { specificationsRoutes } from "./routes/specifications.routes";
 import swaggerFile from "./swagger.json";
 
-// import "./database";
+import "./database";
 
 const app = express();
 app.use(express.json());

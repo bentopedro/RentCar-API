@@ -1,8 +1,5 @@
 import { createConnection, getConnectionOptions } from "typeorm";
 
-// import { createConnection } from "typeorm";
-// createConnection();
-
 interface IOptions {
     host: string;
 }

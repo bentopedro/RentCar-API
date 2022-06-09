@@ -41,6 +41,9 @@
                     "201":{
                         "description": "Created category"
                     },
+                    "404":{
+                        "description": "Category could not be created"
+                    },
                     "500":{
                         "description": "Category could not be created"
                     }
@@ -75,6 +78,75 @@
                 }
                 
             }
+        },
+        "/specifications": {
+            "post":{
+                "tags":["Specification"],
+                "summary": "Create a specification",
+                "description": "Create a new specification",
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type":"object",
+                                "properties":{
+                                    "name": {
+                                        "type":"string"
+                                    },
+                                    "description": {
+                                        "type":"string"
+                                    }
+                                },
+                                "examples":{
+                                    "name":"Specification Name",
+                                    "description":"Specification Description"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201":{
+                        "description": "Created specification"
+                    },
+                    "404":{
+                        "description": "Specification could not be created"
+                    },
+                    "500":{
+                        "description": "Specification could not be created"
+                    }
+                }
+            },
+            "get": {
+                "tags": ["Specification"],
+                "summary": "List All Specification",
+                "description": "List All Specification",
+                "responses": {
+                    "200":{
+                        "description": "Success",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type":"array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties":{
+                                            "name":{
+                                                "type": "string"
+                                            },
+                                            "description":{
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                
+            }
         }
+
     }
 }

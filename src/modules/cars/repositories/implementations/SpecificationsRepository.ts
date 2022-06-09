@@ -1,3 +1,6 @@
+import { getRepository, Repository } from "typeorm";
+import { v4 as uuidV4 } from "uuid";
+
 import { Specification } from "../../entities/Specification";
 import {
     ISpecificationsRepository,
@@ -5,42 +8,34 @@ import {
 } from "../ISpecificationsRepository";
 
 class SpecificationsRepository implements ISpecificationsRepository {
-    private specifications: Specification[];
+    // private specifications: Specification[];
+    private repository: Repository<Specification>;
 
-    private static INSTANCE: SpecificationsRepository;
-
-    constructor() {
-        this.specifications = [];
+    public constructor() {
+        this.repository = getRepository(Specification);
     }
 
-    public static getInstance(): SpecificationsRepository {
-        if (!SpecificationsRepository.INSTANCE) {
-            SpecificationsRepository.INSTANCE = new SpecificationsRepository();
-        }
-
-        return SpecificationsRepository.INSTANCE;
-    }
-
-    create({ name, description }: ISpecificationsRepositoryDTO): void {
-        const specification = new Specification();
-
-        Object.assign(specification, {
+    async create({
+        name,
+        description,
+    }: ISpecificationsRepositoryDTO): Promise<void> {
+        const specification = {
+            id: uuidV4(),
             name,
             description,
-            created_at: new Date(),
-        });
+        };
 
-        this.specifications.push(specification);
+        await this.repository.save(specification);
     }
-    findByName(name: string): Specification | undefined {
-        const spec = this.specifications.find(
-            (specification) => specification.name === name
-        );
 
-        return spec;
+    async findByName(name: string): Promise<Specification | undefined> {
+        const specification = this.repository.findOne({ name });
+        return specification;
     }
-    list(): Specification[] {
-        return this.specifications;
+
+    async list(): Promise<Specification[]> {
+        const specifications = await this.repository.find();
+        return specifications;
     }
 }
 

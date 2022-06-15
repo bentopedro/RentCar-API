@@ -79,6 +79,27 @@
                 
             }
         },
+        "/categories/import":{
+            "post":{
+                "tags":["Category"],
+                "summary":"Upload categories",
+                "description": "Uploads a list of categories",
+                "requestBody":{
+                    "content":{
+                        "application/octet-stream":{
+                            "schema":{
+                                "type":"string"                                
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "201":{
+                        "description": "Categories was successful imported"
+                    }
+                }
+            }
+        },
         "/specifications": {
             "post":{
                 "tags":["Specification"],

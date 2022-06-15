@@ -7,12 +7,18 @@ class CreateCategoryController {
     // constructor(private createCategoryUseCase: CreateCategoryUseCase) {} remove constructor and pass tsyringe
 
     async handle(request: Request, response: Response): Promise<Response> {
-        const { name, description } = request.body;
+        try {
+            const { name, description } = request.body;
 
-        const createCategoryUseCase = container.resolve(CreateCategoryUseCase);
-        await createCategoryUseCase.execute({ name, description });
+            const createCategoryUseCase = container.resolve(
+                CreateCategoryUseCase
+            );
+            await createCategoryUseCase.execute({ name, description });
 
-        return response.status(201).send();
+            return response.status(201).send();
+        } catch (err) {
+            return response.status(400).json({ error: "User already exists" });
+        }
     }
 }
 

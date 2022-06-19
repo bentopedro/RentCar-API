@@ -27,7 +27,7 @@ class User {
     avatar: string;
 
     @CreateDateColumn()
-    created_at: Date;
+    create_at: Date;
 }
 
 export { User };

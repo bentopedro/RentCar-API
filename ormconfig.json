@@ -10,6 +10,6 @@
         "migrationsDir": "./src/database/migrations"
     },
     "entities": [
-      "./src/modules/cars/entities/**/*{.ts,.js}" 
+      "./src/modules/**/entities/**/*{.ts,.js}" 
   ]
 }

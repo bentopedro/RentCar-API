@@ -12,8 +12,8 @@ class UserRepository implements IUserRepository {
         this.repository = getRepository(User);
     }
 
-    async findByName(name: string): Promise<User | undefined> {
-        const user = await this.repository.findOne(name);
+    async findByEmail(email: string): Promise<User | undefined> {
+        const user = await this.repository.findOne(email);
 
         return user;
     }

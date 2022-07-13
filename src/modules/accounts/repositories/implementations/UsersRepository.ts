@@ -1,21 +1,14 @@
 import { getRepository, Repository } from "typeorm";
-import { v4 as uuidV4 } from "uuid";
 
 import { ICreateUserDTO } from "../../dtos/ICreateUserDTO";
 import { User } from "../../entities/User";
-import { IUserRepository } from "../IUsersRepository";
+import { IUsersRepository } from "../IUsersRepository";
 
-class UserRepository implements IUserRepository {
+class UsersRepository implements IUsersRepository {
     private repository: Repository<User>;
 
     constructor() {
         this.repository = getRepository(User);
-    }
-
-    async findByEmail(email: string): Promise<User | undefined> {
-        const user = await this.repository.findOne(email);
-
-        return user;
     }
 
     async create({
@@ -25,8 +18,7 @@ class UserRepository implements IUserRepository {
         driver_licence,
         avatar,
     }: ICreateUserDTO): Promise<void> {
-        const user = this.repository.create({
-            id: uuidV4(),
+        const userData = this.repository.create({
             name,
             password,
             email,
@@ -35,8 +27,18 @@ class UserRepository implements IUserRepository {
             isAdmin: false,
         });
 
-        await this.repository.save(user);
+        await this.repository.save(userData);
+    }
+
+    async findByEmail(email: string): Promise<User | undefined> {
+        const userEmailRecovery = await this.repository.findOne({ email });
+        return userEmailRecovery;
+    }
+
+    async findByID(id: string): Promise<User | undefined> {
+        const userIDRecovery = await this.repository.findOne(id);
+        return userIDRecovery;
     }
 }
 
-export { UserRepository };
+export { UsersRepository };

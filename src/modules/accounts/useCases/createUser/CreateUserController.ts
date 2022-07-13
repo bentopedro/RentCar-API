@@ -3,27 +3,22 @@ import { container } from "tsyringe";
 
 import { CreateUserUseCase } from "./CreateUserUseCase";
 
-class CreateUsersController {
+class CreateUserController {
     async handle(request: Request, response: Response): Promise<Response> {
-        try {
-            const { name, password, email, driver_licence, avatar } =
-                request.body;
+        const { name, email, password, driver_licence, avatar } = request.body;
 
-            const createUsersUseCase = container.resolve(CreateUserUseCase);
+        const createUsersUseCase = container.resolve(CreateUserUseCase);
 
-            await createUsersUseCase.execute({
-                name,
-                password,
-                email,
-                driver_licence,
-                avatar,
-            });
+        createUsersUseCase.execute({
+            name,
+            email,
+            password,
+            driver_licence,
+            avatar,
+        });
 
-            return response.status(201).send();
-        } catch (err) {
-            return response.status(400).json({ error: "User already exists" });
-        }
+        return response.status(201).send();
     }
 }
 
-export { CreateUsersController };
+export { CreateUserController };

@@ -1,29 +1,35 @@
-import express from "express";
+import "reflect-metadata";
+import express, { NextFunction, Request, Response } from "express";
+import "express-async-errors";
 import swaggerUi from "swagger-ui-express";
 
 import "./database";
+import { AppError } from "./errors/AppError";
+import { router } from "./routes";
 
 import "./shared/container";
-
-import { userAuth } from "./routes/authenticate.routes";
-import { categoriesRoutes } from "./routes/categories.routes";
-import { specificationsRoutes } from "./routes/specifications.routes";
-import { userRoutes } from "./routes/users.routes";
 import swaggerFile from "./swagger.json";
 
 const app = express();
 app.use(express.json());
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
-app.use(categoriesRoutes);
-app.use(specificationsRoutes);
-app.use(userRoutes);
-app.use(userAuth);
+app.use(router);
 
-/*
-PODEMOS PASSAR O NOME DO PRODUCT AQUI MESMO, COMO AQUI E RETIRA-LO NO ROUTES
-// app.use(categoriesRoutes); 
-// app.use("/categories", categoriesRoutes); 
-*/
+// need express-async-errors package
+app.use(
+    (err: Error, request: Request, response: Response, next: NextFunction) => {
+        if (err instanceof AppError) {
+            return response
+                .status(err.statusCode)
+                .json({ message: err.message });
+        }
+
+        return response.status(500).json({
+            status: "Error",
+            message: `Internal message error ${err.message}`,
+        });
+    }
+);
 
 app.listen(3333, () => console.log("server running"));

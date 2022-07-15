@@ -8,16 +8,22 @@ class User {
 
     @Column()
     name: string;
+
     @Column()
     email: string;
+
     @Column()
     password: string;
+
     @Column()
     driver_licence: string;
-    @Column()
-    avatar: string;
+
+    // @Column()
+    // avatar: string;
+
     @Column()
     isAdmin: boolean;
+
     @CreateDateColumn()
     created_at: Date;
 

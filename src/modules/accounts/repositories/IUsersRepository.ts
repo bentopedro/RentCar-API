@@ -7,8 +7,8 @@ interface IUsersRepository {
         password,
         email,
         driver_licence,
-        avatar,
-    }: ICreateUserDTO): Promise<void>;
+    }: // avatar,
+    ICreateUserDTO): Promise<void>;
     findByEmail(email: string): Promise<User | undefined>;
     findByID(id: string): Promise<User | undefined>;
 }

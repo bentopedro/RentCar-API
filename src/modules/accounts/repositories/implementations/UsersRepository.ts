@@ -16,15 +16,17 @@ class UsersRepository implements IUsersRepository {
         password,
         email,
         driver_licence,
-    }: // avatar,
-    ICreateUserDTO): Promise<void> {
+        avatar,
+        id,
+    }: ICreateUserDTO): Promise<void> {
         const userData = this.repository.create({
             name,
             password,
             email,
             driver_licence,
-            // avatar,
             isAdmin: false,
+            avatar,
+            id,
         });
 
         await this.repository.save(userData);
@@ -35,8 +37,8 @@ class UsersRepository implements IUsersRepository {
         return userEmailRecovery;
     }
 
-    async findByID(id: string): Promise<User | undefined> {
-        const userIDRecovery = await this.repository.findOne(id);
+    async findByID(id: string): Promise<User> {
+        const userIDRecovery = await this.repository.findOneOrFail(id);
         return userIDRecovery;
     }
 }

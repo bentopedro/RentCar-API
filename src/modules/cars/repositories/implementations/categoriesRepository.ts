@@ -1,5 +1,5 @@
 import { getRepository, Repository } from "typeorm";
-import { v4 as uuidV4 } from "uuid";
+// import { v4 as uuidV4 } from "uuid";
 
 import { Category } from "../../entities/Category";
 import {
@@ -20,7 +20,7 @@ class CategoriesRepository implements ICategoriesRepository {
         const category = {
             description,
             name,
-            id: uuidV4(),
+            // id: uuidV4(),
         };
 
         await this.repository.save(category);

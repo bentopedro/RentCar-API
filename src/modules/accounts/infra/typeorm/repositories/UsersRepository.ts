@@ -15,7 +15,7 @@ class UsersRepository implements IUsersRepository {
         name,
         password,
         email,
-        driver_licence,
+        driver_license,
         avatar,
         id,
     }: ICreateUserDTO): Promise<void> {
@@ -23,7 +23,7 @@ class UsersRepository implements IUsersRepository {
             name,
             password,
             email,
-            driver_licence,
+            driver_license,
             isAdmin: false,
             avatar,
             id,

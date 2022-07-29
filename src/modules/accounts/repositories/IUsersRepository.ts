@@ -6,7 +6,7 @@ interface IUsersRepository {
         name,
         password,
         email,
-        driver_licence,
+        driver_license,
     }: // avatar,
     ICreateUserDTO): Promise<void>;
     findByEmail(email: string): Promise<User | undefined>;

@@ -15,7 +15,7 @@ class CreateUserUseCase {
         name,
         email,
         password,
-        driver_licence,
+        driver_license,
     }: // avatar,
     ICreateUserDTO): Promise<void> {
         // userAlreadyExists
@@ -31,7 +31,7 @@ class CreateUserUseCase {
             name,
             password: passwordHash,
             email,
-            driver_licence,
+            driver_license,
         });
     }
 }

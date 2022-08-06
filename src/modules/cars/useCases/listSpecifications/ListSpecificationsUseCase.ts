@@ -1,12 +1,13 @@
 import { inject, injectable } from "tsyringe";
 
-import { Specification } from "../../entities/Specification";
+import { Specification } from "../../infra/typeorm/entities/Specification";
 import { ISpecificationsRepository } from "../../repositories/ISpecificationsRepository";
+// import { ISpecificationsRepository } from "../../repositories/ISpecificationsRepository";
 
 @injectable()
 class ListSpecificationsUseCase {
     constructor(
-        @inject("createSpecificationUseCase")
+        @inject("SpecificationsRepository")
         private specificationsRepository: ISpecificationsRepository
     ) {}
 

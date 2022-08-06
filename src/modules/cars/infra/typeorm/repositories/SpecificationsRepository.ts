@@ -1,5 +1,5 @@
 import { getRepository, Repository } from "typeorm";
-// import { v4 as uuidV4 } from "uuid";
+import { v4 as uuidV4 } from "uuid";
 
 import {
     ISpecificationsRepository,
@@ -20,7 +20,7 @@ class SpecificationsRepository implements ISpecificationsRepository {
         description,
     }: ISpecificationsRepositoryDTO): Promise<void> {
         const specification = {
-            // id: uuidV4(),
+            id: uuidV4(),
             name,
             description,
         };

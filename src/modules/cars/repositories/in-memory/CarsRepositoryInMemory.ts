@@ -13,7 +13,9 @@ class CarsRepositoryInMemory implements ICarsRepository {
         fine_amount,
         brand,
         category_id,
-    }: ICreateCarDTO): Promise<Car> {
+        specification,
+    }: // idd,
+    ICreateCarDTO): Promise<Car> {
         const car = new Car();
 
         Object.assign(car, {
@@ -24,6 +26,8 @@ class CarsRepositoryInMemory implements ICarsRepository {
             fine_amount,
             brand,
             category_id,
+            specification,
+            // idd,
         });
 
         this.cars.push(car);
@@ -53,6 +57,12 @@ class CarsRepositoryInMemory implements ICarsRepository {
         });
 
         return allAvailableCar;
+    }
+
+    async findById(id: string): Promise<Car> {
+        const car = this.cars.find((car) => car.id === id);
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        return car!;
     }
 }
 

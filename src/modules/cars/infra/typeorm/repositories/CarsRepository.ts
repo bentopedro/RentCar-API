@@ -1,5 +1,5 @@
 import { getRepository, Repository } from "typeorm";
-import { v4 as uuidV4 } from "uuid";
+// import { v4 as uuidV4 } from "uuid";
 
 import { ICreateCarDTO } from "../../../dtos/ICreateCarDTO";
 import { ICarsRepository } from "../../../repositories/ICarsRepository";
@@ -20,6 +20,8 @@ class CarsRepository implements ICarsRepository {
         fine_amount,
         brand,
         category_id,
+        specification,
+        id,
     }: ICreateCarDTO): Promise<Car> {
         const car = {
             name,
@@ -29,7 +31,9 @@ class CarsRepository implements ICarsRepository {
             fine_amount,
             brand,
             category_id,
-            id: uuidV4(),
+            specification,
+            id,
+            // id: uuidV4(),
         };
 
         const createdCar = await this.repository.save(car);
@@ -68,6 +72,12 @@ class CarsRepository implements ICarsRepository {
         const cars = await carsQuery.getMany();
 
         return cars;
+    }
+
+    async findById(id: string): Promise<Car> {
+        const car = await this.repository.findOne(id);
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        return car!;
     }
 }
 

@@ -1,5 +1,4 @@
 import { getRepository, Repository } from "typeorm";
-import { v4 as uuidV4 } from "uuid";
 
 import {
     ISpecificationsRepository,
@@ -19,15 +18,14 @@ class SpecificationsRepository implements ISpecificationsRepository {
         name,
         description,
     }: ISpecificationsRepositoryDTO): Promise<Specification> {
-        const specification = {
-            id: uuidV4(),
+        const specification = this.repository.create({
             name,
             description,
-        };
+        });
 
-        const spec = await this.repository.save(specification);
+        await this.repository.save(specification);
 
-        return spec;
+        return specification;
     }
 
     async findByName(name: string): Promise<Specification | undefined> {

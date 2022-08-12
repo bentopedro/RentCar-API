@@ -1,13 +1,10 @@
 import { getRepository, Repository } from "typeorm";
-import { v4 as uuidV4 } from "uuid";
 
 import {
     ICategoriesRepository,
     ICreateCategoryDTO,
 } from "../../../repositories/ICategoriesRepository";
 import { Category } from "../entities/Category";
-
-// Signleton
 
 class CategoriesRepository implements ICategoriesRepository {
     private repository: Repository<Category>;
@@ -17,11 +14,10 @@ class CategoriesRepository implements ICategoriesRepository {
     }
 
     async create({ name, description }: ICreateCategoryDTO): Promise<void> {
-        const category = {
+        const category = this.repository.create({
             description,
             name,
-            id: uuidV4(),
-        };
+        });
 
         await this.repository.save(category);
     }

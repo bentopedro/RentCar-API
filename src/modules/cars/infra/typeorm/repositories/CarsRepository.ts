@@ -20,25 +20,24 @@ class CarsRepository implements ICarsRepository {
         fine_amount,
         brand,
         category_id,
-        specification,
+        specifications,
         id,
     }: ICreateCarDTO): Promise<Car> {
-        const car = {
-            name,
-            description,
-            daily_rate,
-            license_plate,
-            fine_amount,
+        const car = this.repository.create({
             brand,
             category_id,
-            specification,
+            daily_rate,
+            description,
+            fine_amount,
+            license_plate,
+            name,
+            specifications,
             id,
-            // id: uuidV4(),
-        };
+        });
 
-        const createdCar = await this.repository.save(car);
+        await this.repository.save(car);
 
-        return createdCar;
+        return car;
     }
 
     async findByLicensePlate(license_plate: string): Promise<Car | undefined> {

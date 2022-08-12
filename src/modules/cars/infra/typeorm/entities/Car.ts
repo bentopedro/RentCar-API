@@ -52,7 +52,7 @@ class Car {
     specifications: Specification[];
 
     @Column()
-    available: true;
+    available: boolean;
 
     @CreateDateColumn()
     created_at: Date;
@@ -60,6 +60,7 @@ class Car {
     constructor() {
         if (!this.id) {
             this.id = uuidV4();
+            this.available = true;
         }
     }
 }

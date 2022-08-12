@@ -46,9 +46,11 @@ describe("Create Car Specification", () => {
             description: "test",
         });
 
-        const car_id = car.id;
-        // const specifications_id = [specification.id];
-        const specifications_id = ["test"];
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const car_id = car.id!;
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const specifications_id = [specification.id!];
+        // const specifications_id = ["test"];
 
         const specificationCars = await createCarSpecificationUseCase.execute({
             car_id,

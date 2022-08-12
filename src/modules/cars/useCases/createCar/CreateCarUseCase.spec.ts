@@ -16,7 +16,7 @@ describe("Create Car", () => {
             daily_rate: 150,
             license_plate: "A1-5457",
             fine_amount: 100,
-            brand: " Brand",
+            brand: "Brand",
             category_id: "category",
         });
 
@@ -31,7 +31,7 @@ describe("Create Car", () => {
                 daily_rate: 150,
                 license_plate: "A1-5457",
                 fine_amount: 100,
-                brand: " Brand",
+                brand: "Brand",
                 category_id: "category",
             });
 
@@ -41,7 +41,7 @@ describe("Create Car", () => {
                 daily_rate: 150,
                 license_plate: "A1-5457",
                 fine_amount: 100,
-                brand: " Brand",
+                brand: "Brand",
                 category_id: "category",
             });
         }).rejects.toBeInstanceOf(AppError);
@@ -54,11 +54,11 @@ describe("Create Car", () => {
             daily_rate: 150,
             license_plate: "A2-1234",
             fine_amount: 100,
-            brand: " Brand",
+            brand: "Brand",
             category_id: "category",
         });
 
-        console.log(car);
+        // console.log(car);
 
         expect(car).toBe(true);
     });

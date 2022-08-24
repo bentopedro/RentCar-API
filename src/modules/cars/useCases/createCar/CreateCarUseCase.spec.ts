@@ -7,6 +7,7 @@ let carsRepositoryInMemory: CarsRepositoryInMemory;
 
 describe("Create Car", () => {
     beforeEach(() => {
+        carsRepositoryInMemory = new CarsRepositoryInMemory();
         createCarUseCase = new CreateCarUseCase(carsRepositoryInMemory);
     });
     it("Should be able to create a new car", async () => {
@@ -60,6 +61,6 @@ describe("Create Car", () => {
 
         // console.log(car);
 
-        expect(car).toBe(true);
+        expect(car.available).toBe(true);
     });
 });

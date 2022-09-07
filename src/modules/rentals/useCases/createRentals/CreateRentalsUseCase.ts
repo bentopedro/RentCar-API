@@ -2,6 +2,7 @@ import { inject, injectable } from "tsyringe";
 
 import { IDateProvider } from "../../../../shared/container/provider/DateProvider/IDateProvider";
 import { AppError } from "../../../../shared/errors/AppError";
+import { ICarsRepository } from "../../../cars/repositories/ICarsRepository";
 import { ICreateRentalDTO } from "../../infra/dtos/ICreateRentalDTO";
 import { Rental } from "../../infra/typeorm/entities/Rental";
 import { IRentalsRepository } from "../../repositories/IRentalsRepository";
@@ -12,7 +13,9 @@ class CreateRentalsUseCase {
         @inject("RentalsRepository")
         private rentalsRepository: IRentalsRepository,
         @inject("DayjsDateProvider")
-        private dateProvider: IDateProvider
+        private dateProvider: IDateProvider,
+        @inject("CarsRepository")
+        private carsRepository: ICarsRepository
     ) {}
 
     async execute({
@@ -39,24 +42,12 @@ class CreateRentalsUseCase {
         }
 
         // O aluguel deve ter duração mínima de 24 horas.
-        // const expectedReturnDateFormat = dayjs(expected_return_date)
-        //     .utc()
-        //     .local()
-        //     .format();
-        //
-        // const dataNow = dayjs().utc().local().format();
         const dataNow = this.dateProvider.dateNow();
 
-        // const compareDate = dayjs(expectedReturnDateFormat).diff(
-        //     dataNow,
-        //     "hours"
-        // );
-        // const compareDate = dayjs(expected_return_date).diff(dayjs(), "hours");
         const compareDate = this.dateProvider.compareInHours(
             dataNow,
             expected_return_date
         );
-        // console.log("Compare date ", compareDate);
 
         if (compareDate < minimumHours) {
             throw new AppError("Invalid return time!");
@@ -67,6 +58,8 @@ class CreateRentalsUseCase {
             user_id,
             expected_return_date,
         });
+
+        await this.carsRepository.updateAvailable(car_id, false);
 
         return rental;
     }

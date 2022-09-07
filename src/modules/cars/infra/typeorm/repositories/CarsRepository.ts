@@ -78,6 +78,16 @@ class CarsRepository implements ICarsRepository {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         return car!;
     }
+
+    async updateAvailable(id: string, available: boolean): Promise<void> {
+        await this.repository
+            .createQueryBuilder()
+            .update()
+            .set({ available })
+            .where("id = :id")
+            .setParameters({ id })
+            .execute();
+    }
 }
 
 export { CarsRepository };

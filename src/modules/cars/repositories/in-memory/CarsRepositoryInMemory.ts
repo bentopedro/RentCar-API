@@ -64,6 +64,12 @@ class CarsRepositoryInMemory implements ICarsRepository {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         return car!;
     }
+
+    async updateAvailable(id: string, available: boolean): Promise<void> {
+        const findIndexCar = this.cars.findIndex((car) => car.id === id);
+
+        this.cars[findIndexCar].available = available;
+    }
 }
 
 export { CarsRepositoryInMemory };

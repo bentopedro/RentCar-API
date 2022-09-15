@@ -26,7 +26,7 @@ categoriesRoutes.post(
 
 categoriesRoutes.get(
     "/categories",
-    ensureAuthenticated,
+    // ensureAuthenticated,
     listCategoriesController.handle
 );
 

@@ -20,7 +20,7 @@ specificationsRoutes.post(
 
 specificationsRoutes.get(
     "/specifications",
-    ensureAuthenticated,
+    // ensureAuthenticated,
     listSpecificationsController.handle
 );
 

@@ -17,8 +17,6 @@ export async function ensureAuthenticated(
 ) {
     const authHeader = request.headers.authorization;
 
-    const userTokensRepository = new UsersTokensRepository();
-
     if (!authHeader) {
         throw new AppError("token missing", 401);
     }
@@ -26,30 +24,7 @@ export async function ensureAuthenticated(
     const [, token] = authHeader.split(" ");
 
     try {
-        // Verificar se o token é válido
-        // const decoded = verify(token, "097c613ab89c17668da89e578d4aef14");
-        // console.log(decoded);
-
-        // criou-se uma interface para forçar o retorno do method verify, pois so precisamos do sub para autenticação
-        // No caso, precisarmos as datas de inicio e fim, é só colocar na desestruturação as variaveis que as corespondem
-        const { sub: user_id } = verify(
-            token,
-            auth.secret_refresh_token // Utilizou-se o refresh token ao contrário do secret token
-        ) as IPayload;
-
-        // verificar se o usuário existe na BD
-        // const usersRepository = new UsersRepository();
-        // const user = await usersRepository.findByID(user_id);
-
-        // Utilizou-se o refresh token ao contrário do secret token
-        const user = await userTokensRepository.findByUserIdAndRefreshToken(
-            user_id,
-            token
-        );
-
-        if (!user) {
-            throw new AppError("User doesn't exist!", 401);
-        }
+        const { sub: user_id } = verify(token, auth.secret_token) as IPayload;
 
         request.user = {
             id: user_id,

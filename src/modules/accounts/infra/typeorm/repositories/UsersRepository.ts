@@ -32,9 +32,10 @@ class UsersRepository implements IUsersRepository {
         await this.repository.save(userData);
     }
 
-    async findByEmail(email: string): Promise<User | undefined> {
+    async findByEmail(email: string): Promise<User> {
         const userEmailRecovery = await this.repository.findOne({ email });
-        return userEmailRecovery;
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        return userEmailRecovery!;
     }
 
     async findByID(id: string): Promise<User> {

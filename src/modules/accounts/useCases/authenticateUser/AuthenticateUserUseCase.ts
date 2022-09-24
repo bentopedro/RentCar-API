@@ -25,40 +25,50 @@ interface IResponse {
 @injectable()
 class AuthenticateUserUseCase {
     constructor(
-        @inject("UsersRepository") private usersRepository: IUsersRepository,
+        @inject("UsersRepository")
+        private usersRepository: IUsersRepository,
         @inject("UsersTokensRepository")
         private usersTokensRepository: IUsersTokensRepository,
-        @inject("DayjsDateProvider") private dateProvider: IDateProvider
+        @inject("DayjsDateProvider")
+        private dateProvider: IDateProvider
     ) {}
 
     async execute({ email, password }: IRequest): Promise<IResponse> {
         // verificar se o user existe
         const user = await this.usersRepository.findByEmail(email);
 
+        const {
+            expires_in_token,
+            secret_refresh_token,
+            secret_token,
+            expires_in_refresh_token,
+            expires_refresh_token_days,
+        } = auth;
+
         if (!user) {
             throw new AppError("Email or password incorrect!");
         }
 
         // verificar se a senha está correta
-        const passwordMatch = compare(password, user.password);
+        const passwordMatch = await compare(password, user.password);
 
         if (!passwordMatch) {
             throw new AppError("Email or password incorrect!");
         }
 
         // gerar token
-        const token = sign({}, auth.secret_token, {
+        const token = sign({}, secret_token, {
             subject: user.id,
-            expiresIn: auth.expires_in_token,
+            expiresIn: expires_in_token,
         });
 
-        const refresh_token = sign({ email }, auth.secret_refresh_token, {
+        const refresh_token = sign({ email }, secret_refresh_token, {
             subject: user.id,
-            expiresIn: auth.expires_in_refresh_token,
+            expiresIn: expires_in_refresh_token,
         });
 
         const refresh_token_expires_date = this.dateProvider.addDays(
-            auth.expires_refresh_token_days
+            expires_refresh_token_days
         );
 
         await this.usersTokensRepository.create({
